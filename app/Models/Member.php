@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Member extends Model
 {
     protected $fillable = [
-        'ma_doc_gia', 'ten_doc_gia', 'email', 'dien_thoai', 'dia_chi'
+        'ma_doc_gia', 
+        'ten_doc_gia', 
+        'email', 
+        'dien_thoai', 
+        'dia_chi'
     ];
 
     // Mối quan hệ: Một độc giả có nhiều giao dịch mượn

@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Book extends Model
 {
     protected $fillable = [
-        'title', 'author', 'publication_year', 'total_copies', 'available_copies'
+        'title', 
+        'author', 
+        'publication_year', 
+        'total_copies', 
+        'available_copies'
     ];
 
     // Mối quan hệ: Một sách có nhiều giao dịch mượn

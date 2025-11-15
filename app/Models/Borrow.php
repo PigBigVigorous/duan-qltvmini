@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Borrow extends Model
 {
     protected $fillable = [
-        'member_id', 'book_id', 'borrow_date', 'due_date', 'return_date', 'status'
+        'member_id', 
+        'book_id', 
+        'borrow_date', 
+        'due_date', 
+        'return_date', 
+        'status'
     ];
     
     // Mối quan hệ: Giao dịch thuộc về một độc giả
