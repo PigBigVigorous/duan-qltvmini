@@ -21,5 +21,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        User::factory()->create([
+        'name' => 'Thu Thu Admin',
+        'email' => 'librarian@thuvien.com',
+        'password' => \Illuminate\Support\Facades\Hash::make('password'), // Mật khẩu là 'password'
+        'role' => 'librarian',
+    ]);
     }
 }
