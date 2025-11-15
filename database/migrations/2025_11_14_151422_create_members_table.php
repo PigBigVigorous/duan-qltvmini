@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
+            $table->string('ma_doc_gia')->unique();
+            $table->string('ten_doc_gia');
+            $table->string('email')->unique()->nullable();
+            $table->string('dien_thoai')->nullable();
+            $table->string('dia_chi')->nullable();
             $table->timestamps();
         });
     }
