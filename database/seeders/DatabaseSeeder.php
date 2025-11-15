@@ -15,18 +15,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Doc Gia Test',
+            'email' => 'member@thuvien.com',
+            'password' => Hash::make('password'), // Mật khẩu là 'password'
+            'role' => 'member',
         ]);
 
         User::factory()->create([
-        'name' => 'Thu Thu Admin',
-        'email' => 'librarian@thuvien.com',
-        'password' => \Illuminate\Support\Facades\Hash::make('password'), // Mật khẩu là 'password'
-        'role' => 'librarian',
-    ]);
+            'name' => 'Thu Thu Admin',
+            'email' => 'librarian@thuvien.com',
+            'password' => Hash::make('password'), // Mật khẩu là 'password'
+            'role' => 'librarian',
+        ]);
     }
 }
