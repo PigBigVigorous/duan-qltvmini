@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\MemberController; // Import mới
 use App\Http\Controllers\BorrowController; // Import mới
+use Illuminate\Support\Facades\Auth;
 
 // Routes Quản lý (Cần bảo vệ bằng Middleware)
 Route::resource('books', BookController::class);
@@ -26,4 +27,5 @@ Route::middleware(['auth', 'is_librarian'])->group(function () {
     Route::resource('members', MemberController::class);
     Route::resource('borrows', BorrowController::class)->only(['index', 'store', 'update']);
     // ... Thêm các route khác của Admin/Thủ thư vào đây
+    
 });
