@@ -19,3 +19,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// routes/web.php
+Route::middleware(['auth', 'is_librarian'])->group(function () {
+    Route::resource('books', BookController::class);
+    Route::resource('members', MemberController::class);
+    Route::resource('borrows', BorrowController::class)->only(['index', 'store', 'update']);
+    // ... Thêm các route khác của Admin/Thủ thư vào đây
+});
