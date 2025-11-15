@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash; 
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,20 +16,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Doc Gia Test',
-            'email' => 'member@thuvien.com',
-            'password' => Hash::make('password'), // Mật khẩu là 'password'
-            'role' => 'member',
-        ]);
-
+        // 1. Tạo tài khoản Admin/Thủ thư (Vai trò: librarian)
         User::factory()->create([
             'name' => 'Thu Thu Admin',
             'email' => 'librarian@thuvien.com',
-            'password' => Hash::make('password'), // Mật khẩu là 'password'
+            'password' => Hash::make('password'), // Dùng Hash::make() sau khi đã import
             'role' => 'librarian',
         ]);
+        
+        // 2. Tạo tài khoản độc giả (Vai trò: member)
+        User::factory()->create([
+            'name' => 'Doc Gia Test',
+            'email' => 'member@thuvien.com',
+            'password' => Hash::make('password'), // Dùng Hash::make() sau khi đã import
+            'role' => 'member',
+        ]);
+
     }
+
+
 }
