@@ -6,7 +6,6 @@
     
     <h1>Quản Lý Sách</h1>
     
-    {{-- Form Tìm kiếm (Yêu cầu Đồ án: Tìm) --}}
     <form action="{{ route('books.index') }}" method="GET" class="mb-3">
         <div class="input-group">
             <input type="text" name="search" class="form-control" placeholder="Tìm kiếm theo Tiêu đề hoặc Tác giả..." value="{{ request('search') }}">
@@ -39,12 +38,9 @@
                             <td>{{ $book->publication_year }}</td>
                             <td>{{ $book->available_copies }} / {{ $book->total_copies }}</td>
                             <td>
-                                {{-- Nút Sửa --}}
                                 <a href="{{ route('books.edit', $book->id) }}" class="btn btn-sm btn-info">
                                     <i class="fas fa-edit"></i> Sửa
                                 </a>
-                                
-                                {{-- Form Xóa --}}
                                 <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
@@ -65,7 +61,6 @@
         
         @if ($books->hasPages())
             <div class="card-footer">
-                {{-- Pagination --}}
                 {{ $books->links() }}
             </div>
         @endif

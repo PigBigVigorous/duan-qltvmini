@@ -3,6 +3,7 @@
 {{-- Đặt tiêu đề cho Top Navbar --}}
 @section('page_title', 'Bảng điều khiển')
 
+{{-- Chỉ giữ lại nội dung chính --}}
 @section('content')
 
     {{-- Lời chào mừng --}}
@@ -10,16 +11,12 @@
         <h3>Chào mừng trở lại, {{ Auth::user()->name }}!</h3>
     </div>
 
-    {{-- KIỂM TRA VAI TRÒ --}}
     @if (Auth::user()->isLibrarian())
         
-        {{-- =================================================== --}}
-        {{-- 1. GIAO DIỆN CỦA THỦ THƯ (LIBRARIAN) --}}
-        {{-- =================================================== --}}
-        
+        {{-- Bảng điều khiển của Thủ thư --}}
         <p class="text-muted">Đây là Bảng điều khiển Quản lý Thư viện của bạn.</p>
         <div class="row">
-            {{-- Card Thống kê 1: Tổng số Sách --}}
+            {{-- Card Thống kê 1: Sách --}}
             <div class="col-md-4 mb-4">
                 <div class="card bg-primary text-white h-100">
                     <div class="card-body position-relative">
@@ -30,7 +27,7 @@
                 </div>
             </div>
 
-            {{-- Card Thống kê 2: Tổng số Độc giả --}}
+            {{-- Card Thống kê 2: Độc giả --}}
             <div class="col-md-4 mb-4">
                 <div class="card bg-success text-white h-100">
                     <div class="card-body position-relative">
@@ -41,7 +38,7 @@
                 </div>
             </div>
 
-            {{-- Card Thống kê 3: Sách đang mượn --}}
+            {{-- Card Thống kê 3: Đang mượn --}}
             <div class="col-md-4 mb-4">
                 <div class="card bg-warning text-dark h-100">
                     <div class="card-body position-relative">
@@ -54,23 +51,42 @@
         </div>
 
         <hr class="my-4">
-        {{-- (Phần Lối tắt Truy cập nhanh của Thủ thư giữ nguyên) --}}
+
+        {{-- Lối tắt Truy cập nhanh --}}
         <h4>Truy cập nhanh</h4>
-        <div class="row"> ... </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <a href="{{ route('books.index') }}" class="dashboard-card card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Quản Lý Sách</h5>
+                        <p class="card-text text-muted">Thêm, sửa, xóa và tìm kiếm sách.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ route('members.index') }}" class="dashboard-card card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Quản Lý Độc Giả</h5>
+                        <p class="card-text text-muted">Quản lý thông tin thành viên thư viện.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{{ route('borrows.index') }}" class="dashboard-card card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Quản Lý Mượn/Trả</h5>
+                        <p class="card-text text-muted">Xem các phiếu mượn và đánh dấu trả sách.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
 
     @else
         
-        {{-- =================================================== --}}
-        {{-- 2. GIAO DIỆN CỦA ĐỘC GIẢ (MEMBER) --}}
-        {{-- =================================================== --}}
-
+        {{-- Bảng điều khiển của Độc giả --}}
         <p class="text-muted">Đây là lịch sử mượn sách của bạn tại thư viện.</p>
-        
         <div class="card">
-            <div class="card-header">
-                <i class="fas fa-history me-1"></i>
-                Lịch Sử Mượn Sách Của Tôi
-            </div>
+            <div class="card-header"><i class="fas fa-history me-1"></i> Lịch Sử Mượn Sách Của Tôi</div>
             <div class="card-body p-0">
                 <table class="table table-striped table-hover mb-0">
                     <thead class="table-dark">
@@ -83,7 +99,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- Kiểm tra xem biến $borrows có tồn tại và có dữ liệu không --}}
                         @if (isset($borrows) && $borrows->count() > 0)
                             @foreach ($borrows as $borrow)
                                 <tr class="{{ $borrow->due_date < now()->toDateString() && $borrow->status == 'borrowed' ? 'table-danger' : '' }}">
@@ -103,7 +118,6 @@
                                 </tr>
                             @endforeach
                         @else
-                            {{-- Xử lý nếu $borrows rỗng hoặc tài khoản chưa liên kết --}}
                             <tr>
                                 <td colspan="5" class="text-center py-4">
                                     @if (!Auth::user()->member)
@@ -117,14 +131,12 @@
                     </tbody>
                 </table>
             </div>
-            
             @if (isset($borrows) && $borrows->hasPages())
                 <div class="card-footer">
                     {{ $borrows->links() }}
                 </div>
             @endif
         </div>
-
     @endif
             
 @endsection

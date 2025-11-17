@@ -21,11 +21,18 @@
 
                 <form action="{{ route('members.store') }}" method="POST">
                     @csrf
-
-                    {{-- Thông báo cho người dùng biết mã sẽ tự động tạo --}}
-                    <div class="alert alert-info">
-                        Mã độc giả sẽ được tự động tạo theo định dạng DG001, DG002...
-                    </div>
+                    
+                    {{-- Kiểm tra xem logic tự động tăng mã DG đã được implement chưa --}}
+                    @if (View::exists('members.partials.auto_id_info'))
+                        <div class="alert alert-info">
+                            Mã độc giả sẽ được tự động tạo theo định dạng DG001, DG002...
+                        </div>
+                    @else
+                        <div class="mb-3">
+                            <label for="ma_doc_gia" class="form-label">Mã độc giả (VD: DG001)</label>
+                            <input type="text" class="form-control" id="ma_doc_gia" name="ma_doc_gia" value="{{ old('ma_doc_gia') }}" required>
+                        </div>
+                    @endif
 
                     <div class="mb-3">
                         <label for="ten_doc_gia" class="form-label">Họ và Tên</label>

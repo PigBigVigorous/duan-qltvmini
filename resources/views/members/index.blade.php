@@ -6,7 +6,6 @@
     
     <h1>Quản Lý Độc Giả</h1>
     
-    {{-- Form Tìm kiếm --}}
     <form action="{{ route('members.index') }}" method="GET" class="mb-3">
         <div class="input-group">
             <input type="text" name="search" class="form-control" placeholder="Tìm kiếm theo Tên hoặc Mã độc giả..." value="{{ request('search') }}">

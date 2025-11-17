@@ -26,7 +26,6 @@
                         <label for="member_id" class="form-label">Chọn Độc Giả</label>
                         <select class="form-control" id="member_id" name="member_id" required>
                             <option value="">-- Chọn Độc Giả --</option>
-                            {{-- $members được truyền từ BorrowController::create() --}}
                             @foreach ($members as $member)
                                 <option value="{{ $member->id }}" {{ old('member_id') == $member->id ? 'selected' : '' }}>
                                     {{ $member->ma_doc_gia }} - {{ $member->ten_doc_gia }}
@@ -39,7 +38,6 @@
                         <label for="book_id" class="form-label">Chọn Sách (Chỉ sách còn tồn kho)</label>
                         <select class="form-control" id="book_id" name="book_id" required>
                             <option value="">-- Chọn Sách --</option>
-                            {{-- $books được truyền từ BorrowController::create() --}}
                             @foreach ($books as $book)
                                 <option value="{{ $book->id }}" {{ old('book_id') == $book->id ? 'selected' : '' }}>
                                     {{ $book->title }} (Tồn: {{ $book->available_copies }})
