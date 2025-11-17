@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // 2. TẠO DỮ LIỆU SÁCH THẬT (VIỆT NAM VÀ NƯỚC NGOÀI)
-        $this->seedRealBooks();
+        
 
         // 3. TẠO ĐỘC GiẢ MẪU (BẰNG TIẾNG VIỆT)
         // (Sau khi đổi faker_locale, Factory này sẽ tạo tên Tiếng Việt)
@@ -43,34 +43,57 @@ class DatabaseSeeder extends Seeder
     /**
      * Hàm riêng để tạo sách thật
      */
-    private function seedRealBooks(): void
+    private function seedRealMembers(): void
     {
-        $books = [
-            // Tác phẩm Việt Nam
-            ['title' => 'Dế Mèn Phiêu Lưu Ký', 'author' => 'Tô Hoài', 'year' => 1941, 'copies' => 15],
-            ['title' => 'Số Đỏ', 'author' => 'Vũ Trọng Phụng', 'year' => 1936, 'copies' => 10],
-            ['title' => 'Lão Hạc', 'author' => 'Nam Cao', 'year' => 1943, 'copies' => 20],
-            ['title' => 'Tắt Đèn', 'author' => 'Ngô Tất Tố', 'year' => 1937, 'copies' => 12],
-            ['title' => 'Truyện Kiều', 'author' => 'Nguyễn Du', 'year' => 1820, 'copies' => 5],
-            ['title' => 'Đất Rừng Phương Nam', 'author' => 'Đoàn Giỏi', 'year' => 1957, 'copies' => 18],
-            ['title' => 'Mắt Biếc', 'author' => 'Nguyễn Nhật Ánh', 'year' => 1990, 'copies' => 25],
-            ['title' => 'Cho Tôi Xin Một Vé Đi Tuổi Thơ', 'author' => 'Nguyễn Nhật Ánh', 'year' => 2008, 'copies' => 30],
-            
-            // Tác phẩm Nước ngoài
-            ['title' => 'Harry Potter và Hòn Đá Phù Thủy', 'author' => 'J. K. Rowling', 'year' => 1997, 'copies' => 15],
-            ['title' => 'Nhà Giả Kim', 'author' => 'Paulo Coelho', 'year' => 1988, 'copies' => 10],
-            ['title' => 'Đắc Nhân Tâm', 'author' => 'Dale Carnegie', 'year' => 1936, 'copies' => 20],
-            ['title' => 'Hoàng Tử Bé', 'author' => 'Antoine de Saint-Exupéry', 'year' => 1943, 'copies' => 15],
+        $members = [
+            [
+                'ten' => 'Nguyễn Văn An', 
+                'email' => 'an.nguyen@example.com', 
+                'phone' => '0905111222', 
+                'address' => 'Q.1, TP.HCM'
+            ],
+            [
+                'ten' => 'Trần Thị Bình', 
+                'email' => 'binh.tran@example.com', 
+                'phone' => '0913222333', 
+                'address' => 'Q. Hai Bà Trưng, Hà Nội'
+            ],
+            [
+                'ten' => 'Lê Văn Cường', 
+                'email' => 'cuong.le@example.com', 
+                'phone' => '0989444555', 
+                'address' => 'Q. Sơn Trà, Đà Nẵng'
+            ],
+            [
+                'ten' => 'Phạm Thị Dung', 
+                'email' => 'dung.pham@example.com', 
+                'phone' => '0977666777', 
+                'address' => 'Q. Ninh Kiều, Cần Thơ'
+            ],
+            [
+                'ten' => 'Võ Minh Hải', 
+                'email' => 'hai.vo@example.com', 
+                'phone' => '0935888999', 
+                'address' => 'TP. Long Xuyên, An Giang'
+            ],
         ];
 
-        foreach ($books as $bookData) {
-            Book::create([
-                'title' => $bookData['title'],
-                'author' => $bookData['author'],
-                'publication_year' => $bookData['year'],
-                'total_copies' => $bookData['copies'],
-                'available_copies' => $bookData['copies'], // Ban đầu tồn kho = tổng số
+        $idCounter = 1; // Biến đếm bắt đầu từ 1
+
+        foreach ($members as $memberData) {
+            
+            // Tạo mã DG001, DG002...
+            $maDocGia = 'DG' . str_pad($idCounter, 3, '0', STR_PAD_LEFT);
+
+            Member::create([
+                'ma_doc_gia' => $maDocGia, // Sử dụng mã tự tăng
+                'ten_doc_gia' => $memberData['ten'],
+                'email' => $memberData['email'],
+                'dien_thoai' => $memberData['phone'],
+                'dia_chi' => $memberData['address'],
             ]);
+            
+            $idCounter++; // Tăng biến đếm
         }
     }
 }

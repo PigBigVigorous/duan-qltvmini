@@ -22,9 +22,9 @@
                 <form action="{{ route('members.store') }}" method="POST">
                     @csrf
 
-                    <div class="mb-3">
-                        <label for="ma_doc_gia" class="form-label">Mã độc giả (VD: 1911001)</label>
-                        <input type="text" class="form-control" id="ma_doc_gia" name="ma_doc_gia" value="{{ old('ma_doc_gia') }}" required>
+                    {{-- Thông báo cho người dùng biết mã sẽ tự động tạo --}}
+                    <div class="alert alert-info">
+                        Mã độc giả sẽ được tự động tạo theo định dạng DG001, DG002...
                     </div>
 
                     <div class="mb-3">

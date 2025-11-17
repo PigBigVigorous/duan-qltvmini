@@ -40,17 +40,36 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        // Yêu cầu Đồ án: An toàn, bảo mật dữ liệu (Validation)
+        // 1. Validation (Đã xóa 'ma_doc_gia' khỏi đây)
         $request->validate([
-            'ma_doc_gia' => 'required|unique:members|max:50',
             'ten_doc_gia' => 'required|max:255',
             'dien_thoai' => 'nullable|numeric|digits_between:10,12',
             'email' => 'nullable|email|unique:members',
         ]);
         
-        Member::create($request->all());
+        // 2. Tự động tạo 'ma_doc_gia' (DG001, DG002...)
         
-        return redirect()->route('members.index')->with('success', 'Thêm độc giả thành công!');
+        // Lấy độc giả cuối cùng (an toàn nhất là lấy theo ID)
+        $lastMember = Member::orderBy('id', 'desc')->first();
+        
+        $newIdNumber = 1; // ID bắt đầu nếu CSDL rỗng
+        
+        if ($lastMember && str_starts_with($lastMember->ma_doc_gia, 'DG')) {
+            // Nếu đã có độc giả, lấy số cuối cùng và + 1
+            $lastIdNumber = (int) substr($lastMember->ma_doc_gia, 2); // Trích xuất số (ví dụ: 'DG005' -> 5)
+            $newIdNumber = $lastIdNumber + 1;
+        }
+
+        // Định dạng lại ID (ví dụ: 6 -> 'DG006', 123 -> 'DG123')
+        $newMaDocGia = 'DG' . str_pad($newIdNumber, 3, '0', STR_PAD_LEFT);
+
+        // 3. Chuẩn bị dữ liệu và tạo mới
+        $data = $request->all();
+        $data['ma_doc_gia'] = $newMaDocGia;
+
+        Member::create($data);
+        
+        return redirect()->route('members.index')->with('success', 'Thêm độc giả thành công! Mã mới là: ' . $newMaDocGia);
     }
 
     /**
