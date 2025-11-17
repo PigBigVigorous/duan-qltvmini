@@ -24,6 +24,18 @@ class BorrowController extends Controller
         return view('borrows.index', compact('borrows'));
     }
 
+    public function create()
+    {
+        // Lấy danh sách độc giả
+        $members = Member::orderBy('ten_doc_gia')->get();
+        
+        // Lấy danh sách sách còn tồn kho (available > 0)
+        $books = Book::where('available_copies', '>', 0)->orderBy('title')->get();
+        
+        // Trả về view và truyền 2 biến này sang
+        return view('borrows.create', compact('members', 'books'));
+    }
+
     /**
      * STORE (MƯỢN SÁCH): Xử lý việc tạo mới giao dịch mượn.
      */
