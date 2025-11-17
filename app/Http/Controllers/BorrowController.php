@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Borrow;
 use App\Models\Book;
 use Carbon\Carbon; // Cần dùng Carbon để xử lý ngày tháng
-
+use App\Models\Member;
 class BorrowController extends Controller
 {
     /**
