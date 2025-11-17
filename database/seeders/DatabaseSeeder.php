@@ -13,9 +13,6 @@ class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         // 1. Tạo tài khoản
@@ -32,16 +29,15 @@ class DatabaseSeeder extends Seeder
             'role' => 'member',
         ]);
 
-        // 2. TẠO DỮ LIỆU SÁCH THẬT
-        $this->seedRealBooks(); // <<< Dòng 36 gọi hàm
+        // 2. TẠO DỮ LIỆU SÁCH THẬT (ĐÃ CÓ URL ẢNH)
+        $this->seedRealBooks();
 
         // 3. TẠO ĐỘC GiẢ THẬT
-        $this->seedRealMembers(); // <<< Gọi hàm
+        $this->seedRealMembers();
     }
 
     /**
-     * HÀM BỊ THIẾU MÀ BẠN CẦN THÊM VÀO
-     * Hàm riêng để tạo sách thật
+     * Hàm riêng để tạo sách thật (ĐÃ CÓ HÌNH ẢNH)
      */
     private function seedRealBooks(): void
     {
@@ -86,7 +82,7 @@ class DatabaseSeeder extends Seeder
                 'author' => 'Dale Carnegie', 
                 'year' => 1936, 
                 'copies' => 20,
-                'image' => 'https://upload.wikimedia.org/wikipedia/vi/5/5e/%C4%90%E1%BA%AFc_nh%C3%A2n_t%C3%A2m.JPG' //
+                'image' => 'https://upload.wikimedia.org/wikipedia/vi/5/5e/%C4%90%E1%BA%AFc_nh%C3%A2n_t%C3%A2m.JPG'
             ],
         ];
 
@@ -103,7 +99,6 @@ class DatabaseSeeder extends Seeder
     }
 
     /**
-     * HÀM BỊ THIẾU MÀ BẠN CẦN THÊM VÀO
      * Hàm tạo độc giả thật (Việt Nam)
      */
     private function seedRealMembers(): void
@@ -112,12 +107,9 @@ class DatabaseSeeder extends Seeder
             ['ten' => 'Nguyễn Văn An', 'email' => 'an.nguyen@example.com', 'phone' => '0905111222', 'address' => 'Q.1, TP.HCM'],
             ['ten' => 'Trần Thị Bình', 'email' => 'binh.tran@example.com', 'phone' => '0913222333', 'address' => 'Q. Hai Bà Trưng, Hà Nội'],
             ['ten' => 'Lê Văn Cường', 'email' => 'cuong.le@example.com', 'phone' => '0989444555', 'address' => 'Q. Sơn Trà, Đà Nẵng'],
-            ['ten' => 'Phạm Thị Dung', 'email' => 'dung.pham@example.com', 'phone' => '0977666777', 'address' => 'Q. Ninh Kiều, Cần Thơ'],
-            ['ten' => 'Võ Minh Hải', 'email' => 'hai.vo@example.com', 'phone' => '0935888999', 'address' => 'TP. Long Xuyên, An Giang'],
         ];
-
+        
         $idCounter = 1;
-
         foreach ($members as $memberData) {
             $maDocGia = 'DG' . str_pad($idCounter, 3, '0', STR_PAD_LEFT);
             Member::create([

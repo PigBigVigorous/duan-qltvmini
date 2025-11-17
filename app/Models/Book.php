@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory; // <<< THÊM DÒNG NÀY
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Book extends Model
 {
-    use HasFactory; // <<< THÊM DÒNG NÀY
+    use HasFactory;
 
     protected $fillable = [
         'title', 
         'author', 
         'publication_year', 
-        'image',
+        'image', // <<< ĐÃ THÊM
         'total_copies', 
         'available_copies'
     ];
