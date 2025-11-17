@@ -27,7 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        /** @var \App\Models\User $user */
+        /** @var \App\Models\User $user */ // Giúp VS Code nhận diện hàm isLibrarian()
         $user = Auth::user();
         
         // Dữ liệu cho Thủ thư (Librarian)
@@ -39,8 +39,15 @@ class HomeController extends Controller
             return view('home', compact('statBooks', 'statMembers', 'statBorrows'));
         }
         
-        // Dữ liệu cho Độc giả (Member)
-        // (Bạn có thể nâng cấp sau này để hiển thị sách họ đang mượn)
-        return view('home');
+        // --- DỮ LIỆU CHO ĐỘC GIẢ (MEMBER) ---
+        $borrows = null;
+        if ($user->member) { // Kiểm tra xem tài khoản User đã được liên kết với hồ sơ Member chưa
+            $borrows = $user->member->borrows() // Lấy các giao dịch mượn của member đó
+                                  ->with('book') // Lấy kèm thông tin Sách
+                                  ->latest('borrow_date') // Sắp xếp mới nhất
+                                  ->paginate(10); // Phân trang
+        }
+        
+        return view('home', compact('borrows'));
     }
 }
