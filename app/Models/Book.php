@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory; // <<< THÊM DÒNG NÀY
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Book extends Model
 {
+    use HasFactory; // <<< THÊM DÒNG NÀY
+
     protected $fillable = [
         'title', 
         'author', 
@@ -16,7 +18,6 @@ class Book extends Model
         'available_copies'
     ];
 
-    // Mối quan hệ: Một sách có nhiều giao dịch mượn
     public function borrows(): HasMany
     {
         return $this->hasMany(Borrow::class);
