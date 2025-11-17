@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Book;   // <<< IMPORT
-use App\Models\Member; // <<< IMPORT
+use App\Models\Book;
+use App\Models\Member;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -32,68 +32,65 @@ class DatabaseSeeder extends Seeder
             'role' => 'member',
         ]);
 
-        // 2. TẠO DỮ LIỆU SÁCH THẬT (VIỆT NAM VÀ NƯỚC NGOÀI)
-        $this->seedRealBooks();
+        // 2. TẠO DỮ LIỆU SÁCH THẬT
+        $this->seedRealBooks(); // <<< Dòng 36 gọi hàm
 
-        // 3. TẠO ĐỘC GiẢ MẪU (BẰNG TIẾNG VIỆT)
-        // (Sau khi đổi faker_locale, Factory này sẽ tạo tên Tiếng Việt)
-        Member::factory(100)->create();
+        // 3. TẠO ĐỘC GiẢ THẬT
+        $this->seedRealMembers(); // <<< Gọi hàm
     }
 
     /**
+     * HÀM BỊ THIẾU MÀ BẠN CẦN THÊM VÀO
      * Hàm riêng để tạo sách thật
+     */
+    private function seedRealBooks(): void
+    {
+        $books = [
+            ['title' => 'Dế Mèn Phiêu Lưu Ký', 'author' => 'Tô Hoài', 'year' => 1941, 'copies' => 15],
+            ['title' => 'Số Đỏ', 'author' => 'Vũ Trọng Phụng', 'year' => 1936, 'copies' => 10],
+            ['title' => 'Lão Hạc', 'author' => 'Nam Cao', 'year' => 1943, 'copies' => 20],
+            ['title' => 'Mắt Biếc', 'author' => 'Nguyễn Nhật Ánh', 'year' => 1990, 'copies' => 25],
+            ['title' => 'Nhà Giả Kim', 'author' => 'Paulo Coelho', 'year' => 1988, 'copies' => 10],
+            ['title' => 'Đắc Nhân Tâm', 'author' => 'Dale Carnegie', 'year' => 1936, 'copies' => 20],
+        ];
+
+        foreach ($books as $bookData) {
+            Book::create([
+                'title' => $bookData['title'],
+                'author' => $bookData['author'],
+                'publication_year' => $bookData['year'],
+                'total_copies' => $bookData['copies'],
+                'available_copies' => $bookData['copies'],
+            ]);
+        }
+    }
+
+    /**
+     * HÀM BỊ THIẾU MÀ BẠN CẦN THÊM VÀO
+     * Hàm tạo độc giả thật (Việt Nam)
      */
     private function seedRealMembers(): void
     {
         $members = [
-            [
-                'ten' => 'Nguyễn Văn An', 
-                'email' => 'an.nguyen@example.com', 
-                'phone' => '0905111222', 
-                'address' => 'Q.1, TP.HCM'
-            ],
-            [
-                'ten' => 'Trần Thị Bình', 
-                'email' => 'binh.tran@example.com', 
-                'phone' => '0913222333', 
-                'address' => 'Q. Hai Bà Trưng, Hà Nội'
-            ],
-            [
-                'ten' => 'Lê Văn Cường', 
-                'email' => 'cuong.le@example.com', 
-                'phone' => '0989444555', 
-                'address' => 'Q. Sơn Trà, Đà Nẵng'
-            ],
-            [
-                'ten' => 'Phạm Thị Dung', 
-                'email' => 'dung.pham@example.com', 
-                'phone' => '0977666777', 
-                'address' => 'Q. Ninh Kiều, Cần Thơ'
-            ],
-            [
-                'ten' => 'Võ Minh Hải', 
-                'email' => 'hai.vo@example.com', 
-                'phone' => '0935888999', 
-                'address' => 'TP. Long Xuyên, An Giang'
-            ],
+            ['ten' => 'Nguyễn Văn An', 'email' => 'an.nguyen@example.com', 'phone' => '0905111222', 'address' => 'Q.1, TP.HCM'],
+            ['ten' => 'Trần Thị Bình', 'email' => 'binh.tran@example.com', 'phone' => '0913222333', 'address' => 'Q. Hai Bà Trưng, Hà Nội'],
+            ['ten' => 'Lê Văn Cường', 'email' => 'cuong.le@example.com', 'phone' => '0989444555', 'address' => 'Q. Sơn Trà, Đà Nẵng'],
+            ['ten' => 'Phạm Thị Dung', 'email' => 'dung.pham@example.com', 'phone' => '0977666777', 'address' => 'Q. Ninh Kiều, Cần Thơ'],
+            ['ten' => 'Võ Minh Hải', 'email' => 'hai.vo@example.com', 'phone' => '0935888999', 'address' => 'TP. Long Xuyên, An Giang'],
         ];
 
-        $idCounter = 1; // Biến đếm bắt đầu từ 1
+        $idCounter = 1;
 
         foreach ($members as $memberData) {
-            
-            // Tạo mã DG001, DG002...
             $maDocGia = 'DG' . str_pad($idCounter, 3, '0', STR_PAD_LEFT);
-
             Member::create([
-                'ma_doc_gia' => $maDocGia, // Sử dụng mã tự tăng
+                'ma_doc_gia' => $maDocGia,
                 'ten_doc_gia' => $memberData['ten'],
                 'email' => $memberData['email'],
                 'dien_thoai' => $memberData['phone'],
                 'dia_chi' => $memberData['address'],
             ]);
-            
-            $idCounter++; // Tăng biến đếm
+            $idCounter++;
         }
     }
 }
