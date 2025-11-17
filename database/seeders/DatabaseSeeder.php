@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // 2. TẠO DỮ LIỆU SÁCH THẬT (VIỆT NAM VÀ NƯỚC NGOÀI)
-        
+        $this->seedRealBooks();
 
         // 3. TẠO ĐỘC GiẢ MẪU (BẰNG TIẾNG VIỆT)
         // (Sau khi đổi faker_locale, Factory này sẽ tạo tên Tiếng Việt)
