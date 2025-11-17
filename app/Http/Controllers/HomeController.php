@@ -27,6 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         
         // Dữ liệu cho Thủ thư (Librarian)
