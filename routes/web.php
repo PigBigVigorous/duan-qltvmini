@@ -5,10 +5,9 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\BorrowController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\WelcomeController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 // Các route của Auth (Login, Register...)
 Auth::routes();
