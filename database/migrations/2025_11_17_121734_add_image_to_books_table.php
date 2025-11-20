@@ -8,6 +8,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('books', function (Blueprint $table) {
+            // Thêm cột 'image' (kiểu string) để lưu URL, cho phép null
             $table->string('image')->nullable()->after('publication_year');
         });
     }

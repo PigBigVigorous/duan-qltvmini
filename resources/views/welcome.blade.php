@@ -4,13 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Thư Viện Mini</title>
-
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    
     <style>
         .hero-section {
             background: linear-gradient(to right, rgba(29, 78, 216, 0.8), rgba(30, 64, 175, 0.9)), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080') no-repeat center center;
@@ -30,11 +27,11 @@
         }
         .book-card-img-top {
             width: 100%;
-            height: 300px; /* Chiều cao cố định cho ảnh bìa */
-            object-fit: cover; /* Đảm bảo ảnh vừa vặn đẹp */
+            height: 300px;
+            object-fit: cover;
             border-top-left-radius: 0.5rem;
             border-top-right-radius: 0.5rem;
-            background-color: #eee; /* Màu nền cho ảnh */
+            background-color: #eee;
         }
         .navbar-brand {
             font-weight: bold;
@@ -52,8 +49,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <i class="fas fa-book-open me-2"></i>
-                    Thư Viện Mini
+                    <i class="fas fa-book-open me-2"></i> Thư Viện Mini
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#publicNavbar">
                     <span class="navbar-toggler-icon"></span>
