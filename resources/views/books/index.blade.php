@@ -6,11 +6,22 @@
     
     <h1>Quản Lý Sách</h1>
     
+    {{-- FORM TÌM KIẾM --}}
     <form action="{{ route('books.index') }}" method="GET" class="mb-3">
         <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="Tìm kiếm theo Tiêu đề hoặc Tác giả..." value="{{ request('search') }}">
-            <button class="btn btn-outline-secondary" type="submit">Tìm Kiếm</button>
-            <a href="{{ route('books.index') }}" class="btn btn-outline-warning">Xóa Tìm</a>
+            {{-- Giữ lại từ khóa đã nhập bằng value="{{ request('search') }}" --}}
+            <input type="text" name="search" class="form-control" 
+                   placeholder="Tìm kiếm theo Tiêu đề hoặc Tác giả..." 
+                   value="{{ request('search') }}">
+            <button class="btn btn-outline-secondary" type="submit">
+                <i class="fas fa-search"></i> Tìm Kiếm
+            </button>
+            {{-- Nút Xóa Tìm để quay lại danh sách gốc --}}
+            @if(request('search'))
+                <a href="{{ route('books.index') }}" class="btn btn-outline-danger">
+                    <i class="fas fa-times"></i> Xóa Tìm
+                </a>
+            @endif
         </div>
     </form>
 
@@ -30,6 +41,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{-- SỬ DỤNG @forelse ĐỂ XỬ LÝ TRƯỜNG HỢP KHÔNG CÓ KẾT QUẢ --}}
                     @forelse ($books as $book)
                         <tr>
                             <td>{{ $book->id }}</td>
@@ -51,8 +63,12 @@
                             </td>
                         </tr>
                     @empty
+                        {{-- ĐÂY LÀ PHẦN HIỂN THỊ KHI KHÔNG TÌM THẤY SÁCH (Như hình bạn gửi) --}}
                         <tr>
-                            <td colspan="6" class="text-center">Không tìm thấy sách nào.</td>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                <i class="fas fa-search mb-2" style="font-size: 2rem;"></i><br>
+                                <strong>Không tìm thấy sách nào phù hợp với từ khóa "{{ request('search') }}".</strong>
+                            </td>
                         </tr>
                     @endforelse
                 </tbody>

@@ -14,16 +14,23 @@ class MemberController extends Controller
     {
         $query = Member::query();
         
-        // Xử lý Tìm kiếm (Yêu cầu Đồ án: Tìm kiếm)
+        // 1. Xử lý Tìm kiếm (Mã, Tên, Email hoặc Số điện thoại)
         if ($request->filled('search')) {
             $search = $request->input('search');
-            $query->where('ten_doc_gia', 'like', "%{$search}%")
-                  ->orWhere('ma_doc_gia', 'like', "%{$search}%");
+            $query->where(function($q) use ($search) {
+                $q->where('ten_doc_gia', 'like', "%{$search}%")
+                  ->orWhere('ma_doc_gia', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('dien_thoai', 'like', "%{$search}%");
+            });
         }
         
-        $members = $query->latest()->paginate(10);
+        // 2. Sắp xếp (Ví dụ: Tên A-Z)
+        $members = $query->orderBy('ten_doc_gia', 'asc')->paginate(10);
 
-        // Trả về View với dữ liệu độc giả
+        // Giữ lại từ khóa tìm kiếm khi qua trang 2, 3...
+        $members->appends(['search' => $request->search]);
+
         return view('members.index', compact('members'));
     }
 

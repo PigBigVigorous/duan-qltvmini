@@ -12,15 +12,23 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-        // Xử lý Tìm kiếm (Yêu cầu Đồ án)
         $query = Book::query();
+
+        // 1. Xử lý Tìm kiếm (Tiêu đề HOẶC Tác giả)
         if ($request->filled('search')) {
             $search = $request->input('search');
-            $query->where('title', 'like', "%{$search}%")
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
                   ->orWhere('author', 'like', "%{$search}%");
+            });
         }
         
-        $books = Book::orderBy('id', 'asc')->paginate(50);
+        // 2. Sắp xếp theo ID tăng dần (1, 2, 3...) như bạn đã yêu cầu trước đó
+        // Nếu muốn mới nhất lên đầu thì đổi thành 'desc'
+        $books = $query->orderBy('id', 'asc')->paginate(10);
+
+        // Giữ lại tham số tìm kiếm khi chuyển trang (Pagination)
+        $books->appends(['search' => $request->search]);
 
         return view('books.index', compact('books'));
     }

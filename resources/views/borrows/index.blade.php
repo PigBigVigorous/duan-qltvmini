@@ -4,7 +4,24 @@
 
 @section('content')
     
-    <h1>Quản Lý Mượn Trả Sách (Sách đang mượn)</h1>
+    <h1>Quản Lý Mượn Trả Sách</h1>
+
+    {{-- FORM TÌM KIẾM --}}
+    <form action="{{ route('borrows.index') }}" method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" 
+                   placeholder="Nhập Tên Sách hoặc Tên Độc Giả..." 
+                   value="{{ request('search') }}">
+            <button class="btn btn-outline-secondary" type="submit">
+                <i class="fas fa-search"></i> Tìm Kiếm
+            </button>
+            @if(request('search'))
+                <a href="{{ route('borrows.index') }}" class="btn btn-outline-danger">
+                    <i class="fas fa-times"></i> Xóa Tìm
+                </a>
+            @endif
+        </div>
+    </form>
 
     <a href="{{ route('borrows.create') }}" class="btn btn-primary mb-3"><i class="fas fa-plus me-1"></i> Tạo Phiếu Mượn Mới</a>
 
@@ -24,7 +41,6 @@
                 </thead>
                 <tbody>
                     @forelse ($borrows as $borrow)
-                        {{-- Tô màu đỏ nếu quá hạn --}}
                         <tr class="{{ $borrow->due_date < now()->toDateString() && $borrow->status == 'borrowed' ? 'table-danger' : '' }}">
                             <td>{{ $borrow->id }}</td>
                             <td>{{ $borrow->book->title ?? 'N/A' }}</td>
@@ -41,7 +57,6 @@
                                 @endif
                             </td>
                             <td>
-                                {{-- Chỉ hiển thị nút Trả nếu sách đang mượn --}}
                                 @if ($borrow->status == 'borrowed')
                                     <form action="{{ route('borrows.update', $borrow->id) }}" method="POST" style="display:inline;">
                                         @csrf
@@ -54,8 +69,12 @@
                             </td>
                         </tr>
                     @empty
+                        {{-- THÔNG BÁO KHÔNG TÌM THẤY --}}
                         <tr>
-                            <td colspan="7" class="text-center">Không có sách nào đang được mượn.</td>
+                            <td colspan="7" class="text-center text-muted py-4">
+                                <i class="fas fa-search mb-2" style="font-size: 2rem;"></i><br>
+                                <strong>Không tìm thấy phiếu mượn nào phù hợp với từ khóa "{{ request('search') }}".</strong>
+                            </td>
                         </tr>
                     @endforelse
                 </tbody>

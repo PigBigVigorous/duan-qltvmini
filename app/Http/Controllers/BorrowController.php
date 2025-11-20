@@ -12,15 +12,35 @@ class BorrowController extends Controller
     /**
      * INDEX: Hiển thị danh sách các giao dịch đang mượn/quá hạn.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Lấy các giao dịch đang mượn ('borrowed')
-        // Eager load Book và Member để truy cập tiêu đề sách, tên độc giả
-        $borrows = Borrow::with(['book', 'member'])
-                         ->where('status', 'borrowed')
-                         ->latest('borrow_date')
-                         ->paginate(15);
+        // Khởi tạo query, Eager Load quan hệ để tránh N+1 Query
+        $query = Borrow::with(['book', 'member']);
+
+        // 1. Xử lý Tìm kiếm Nâng cao (Tìm theo Tên Sách HOẶC Tên Độc Giả)
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                // Tìm trong bảng Books
+                $q->whereHas('book', function($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%");
+                })
+                // HOẶC tìm trong bảng Members
+                ->orWhereHas('member', function($q) use ($search) {
+                    $q->where('ten_doc_gia', 'like', "%{$search}%")
+                      ->orWhere('ma_doc_gia', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        // Lọc trạng thái (Mặc định chỉ hiện sách đang mượn, trừ khi tìm kiếm)
+        // Nếu bạn muốn tìm trong CẢ lịch sử trả sách thì bỏ dòng where('status') đi
+        // $query->where('status', 'borrowed'); 
         
+        $borrows = $query->latest('borrow_date')->paginate(15);
+        
+        $borrows->appends(['search' => $request->search]);
+
         return view('borrows.index', compact('borrows'));
     }
 

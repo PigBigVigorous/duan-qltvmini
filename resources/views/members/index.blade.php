@@ -6,11 +6,20 @@
     
     <h1>Quản Lý Độc Giả</h1>
     
+    {{-- FORM TÌM KIẾM --}}
     <form action="{{ route('members.index') }}" method="GET" class="mb-3">
         <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="Tìm kiếm theo Tên hoặc Mã độc giả..." value="{{ request('search') }}">
-            <button class="btn btn-outline-secondary" type="submit">Tìm Kiếm</button>
-            <a href="{{ route('members.index') }}" class="btn btn-outline-warning">Xóa Tìm</a>
+            <input type="text" name="search" class="form-control" 
+                   placeholder="Tìm theo Tên, Mã độc giả, Email hoặc SĐT..." 
+                   value="{{ request('search') }}">
+            <button class="btn btn-outline-secondary" type="submit">
+                <i class="fas fa-search"></i> Tìm Kiếm
+            </button>
+            @if(request('search'))
+                <a href="{{ route('members.index') }}" class="btn btn-outline-danger">
+                    <i class="fas fa-times"></i> Xóa Tìm
+                </a>
+            @endif
         </div>
     </form>
 
@@ -51,8 +60,12 @@
                             </td>
                         </tr>
                     @empty
+                        {{-- THÔNG BÁO KHÔNG TÌM THẤY --}}
                         <tr>
-                            <td colspan="6" class="text-center">Không tìm thấy độc giả nào.</td>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                <i class="fas fa-search mb-2" style="font-size: 2rem;"></i><br>
+                                <strong>Không tìm thấy độc giả nào phù hợp với từ khóa "{{ request('search') }}".</strong>
+                            </td>
                         </tr>
                     @endforelse
                 </tbody>
