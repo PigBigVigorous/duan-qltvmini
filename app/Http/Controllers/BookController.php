@@ -20,7 +20,7 @@ class BookController extends Controller
                   ->orWhere('author', 'like', "%{$search}%");
         }
         
-        $books = $query->latest()->paginate(10);
+        $books = Book::orderBy('id', 'asc')->paginate(50);
 
         return view('books.index', compact('books'));
     }
