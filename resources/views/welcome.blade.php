@@ -9,40 +9,65 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <style>
-        .hero-section {
-            background: linear-gradient(to right, rgba(29, 78, 216, 0.8), rgba(30, 64, 175, 0.9)), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080') no-repeat center center;
-            background-size: cover;
-            color: white;
-            padding: 8rem 0;
-            text-align: center;
-        }
-        .book-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 0;
-            border-radius: 0.5rem;
-        }
-        .book-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        .book-card-img-top {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-top-left-radius: 0.5rem;
-            border-top-right-radius: 0.5rem;
-            background-color: #eee;
-        }
-        .navbar-brand {
-            font-weight: bold;
-        }
-        footer {
-            background-color: #343a40;
-            color: white;
-            padding: 2rem 0;
-            margin-top: 4rem;
-        }
-    </style>
+    .hero-section {
+        /* Thêm lớp phủ gradient đen nhẹ để chữ trắng dễ đọc hơn */
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080') no-repeat center center;
+        background-size: cover;
+        color: white;
+        padding: 6rem 0;
+        text-align: center;
+    }
+    
+    .book-card {
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border: none;
+        border-radius: 1rem; /* Bo tròn nhiều hơn */
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        background: #fff;
+        overflow: hidden; /* Để ảnh không bị tràn ra ngoài bo góc */
+        height: 100%;
+    }
+
+    .book-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+
+    .book-card-img-top {
+        width: 100%;
+        aspect-ratio: 2/3; /* Tỷ lệ vàng cho sách */
+        object-fit: cover;
+        background-color: #f1f1f1;
+        border-bottom: 1px solid #eee;
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .card-title {
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        /* Giới hạn tiêu đề 2 dòng */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .badge {
+        font-weight: 500;
+        padding: 0.5em 0.8em;
+    }
+    
+    footer {
+        background-color: #212529;
+        color: #adb5bd;
+        padding: 3rem 0;
+        margin-top: auto;
+    }
+</style>
 </head>
 <body>
     <div id="app">
