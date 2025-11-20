@@ -101,7 +101,7 @@
                             <div class="col">
                                 <div class="card h-100 book-card">
                                     {{-- SỬ DỤNG ẢNH THẬT (ĐÃ SỬA) --}}
-                                    <img src="{{ $book->image ?? 'https://via.placeholder.com/400x600.png/003366/FFFFFF?text=No+Image' }}" class="book-card-img-top" alt="{{ $book->title }}">
+                                    <img src="{{ $book->image ? asset($book->image) : 'https://via.placeholder.com/400x600.png/003366/FFFFFF?text=No+Image' }}" class="book-card-img-top" alt="{{ $book->title }}">
                                     
                                     <div class="card-body d-flex flex-column">
                                         <h5 class="card-title">{{ $book->title }}</h5>

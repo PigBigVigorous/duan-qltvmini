@@ -47,42 +47,43 @@ class DatabaseSeeder extends Seeder
                 'author' => 'Tô Hoài', 
                 'year' => 1941, 
                 'copies' => 15,
-                'image' => 'https://upload.wikimedia.org/wikipedia/vi/thumb/d/d9/De_Men_phieu_luu_ky_-_To_Hoai.jpg/800px-De_Men_phieu_luu_ky_-_To_Hoai.jpg'
+                // Lưu đường dẫn tương đối tính từ thư mục public
+                'image' => 'images/books/DeMenPhieuLuuKy.jpg' 
             ],
             [
                 'title' => 'Số Đỏ', 
                 'author' => 'Vũ Trọng Phụng', 
                 'year' => 1936, 
                 'copies' => 10,
-                'image' => 'https://upload.wikimedia.org/wikipedia/vi/a/a2/SoDo.jpg'
+                'image' => 'images/books/SoDo.jpg'
             ],
             [
                 'title' => 'Lão Hạc', 
                 'author' => 'Nam Cao', 
                 'year' => 1943, 
                 'copies' => 20,
-                'image' => 'https://upload.wikimedia.org/wikipedia/vi/3/3b/Lao_Hac_-_Nam_Cao.jpg'
+                'image' => 'images/books/LaoHac.jpg'
             ],
             [
                 'title' => 'Mắt Biếc', 
                 'author' => 'Nguyễn Nhật Ánh', 
                 'year' => 1990, 
                 'copies' => 25,
-                'image' => 'https://upload.wikimedia.org/wikipedia/vi/2/23/Mat_biec.jpg'
+                'image' => 'images/books/MatBiec.jpg'
             ],
             [
                 'title' => 'Nhà Giả Kim', 
                 'author' => 'Paulo Coelho', 
                 'year' => 1988, 
                 'copies' => 10,
-                'image' => 'https://upload.wikimedia.org/wikipedia/vi/8/82/Nha_gia_kim_2017.jpg'
+                'image' => 'images/books/NhaGiaKim.jpg'
             ],
             [
                 'title' => 'Đắc Nhân Tâm', 
                 'author' => 'Dale Carnegie', 
                 'year' => 1936, 
                 'copies' => 20,
-                'image' => 'https://upload.wikimedia.org/wikipedia/vi/5/5e/%C4%90%E1%BA%AFc_nh%C3%A2n_t%C3%A2m.JPG'
+                'image' => 'images/books/DacNhanTam.jpg'
             ],
         ];
 
