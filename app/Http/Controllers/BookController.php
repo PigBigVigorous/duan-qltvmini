@@ -38,18 +38,38 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        // Yêu cầu Đồ án: An toàn, bảo mật dữ liệu (Validation)
+        // 1. Validation (Thêm validate cho ảnh)
         $request->validate([
             'title' => 'required|max:255',
             'author' => 'required|max:255',
+            'publication_year' => 'required|integer|min:1000|max:'.(date('Y')+1),
             'total_copies' => 'required|integer|min:1',
-            'publication_year' => 'required|digits:4|integer|min:1900|max:'.date('Y'),
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', // Validate ảnh tối đa 2MB
         ]);
         
-        $book = Book::create($request->all());
-        // Thiết lập số lượng tồn kho ban đầu
-        $book->available_copies = $book->total_copies; 
-        $book->save();
+        // Lấy tất cả dữ liệu từ form
+        $data = $request->all();
+
+        // 2. Xử lý Upload Ảnh
+        if ($request->hasFile('image')) {
+            // Lấy file từ request
+            $file = $request->file('image');
+            
+            // Đặt tên file duy nhất (timestamp + tên gốc) để tránh trùng
+            $filename = time() . '_' . $file->getClientOriginalName();
+            
+            // Di chuyển file vào thư mục public/images/books
+            $file->move(public_path('images/books'), $filename);
+            
+            // Lưu đường dẫn vào mảng dữ liệu
+            $data['image'] = 'images/books/' . $filename;
+        }
+
+        // 3. Thiết lập tồn kho ban đầu
+        $data['available_copies'] = $data['total_copies'];
+
+        // 4. Tạo sách mới
+        Book::create($data);
         
         return redirect()->route('books.index')->with('success', 'Thêm sách thành công!');
     }
